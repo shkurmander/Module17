@@ -6,6 +6,11 @@ namespace Task2
 {
     public class ConsoleUI
     {
+        delegate void ChangeDataHandler(int option);
+        delegate void UserDataActionHandler();
+
+        event ChangeDataHandler ChangeDataNotify;
+        event UserDataActionHandler UserDataActionNotify;
         /// <summary>
         /// Собственный класс исключения
         /// </summary>
@@ -18,14 +23,14 @@ namespace Task2
             }
         }
 
-        delegate void ChangeDataHandler(int option);
-       
-        event ChangeDataHandler ChangeDataNotify;
+        
         
         public void Start()
         {
             var data = new UserData();
             ChangeDataNotify += data.Sort;
+            UserDataActionNotify += data.Print;
+            UserDataActionNotify += data.PrintLog;
             data.Print();
 
             bool exit = false;
@@ -38,12 +43,13 @@ namespace Task2
                     var option = Convert.ToInt32(Console.ReadLine());
                     if (option < 1 || option > 2)
                     {
+                        
                         throw new IncorrectActionException("Такого параметра не существует! ", option);
                     }
                     else
                     {
                         DataChangeRequest(option);
-                        data.Print();
+                        UserDataActionRequest("print");
                     }
                 }
                 catch (FormatException)
@@ -66,10 +72,23 @@ namespace Task2
                 }
 
             } while (!exit);
+            
         }
+        /// <summary>
+        /// вызов события к которому прикручена сортировка
+        /// </summary>
+        /// <param name="option">Параметр сортировки</param>
         protected virtual void DataChangeRequest(int option)
         {
             ChangeDataNotify?.Invoke(option);
+        }
+        /// <summary>
+        /// вызов события к которому прикручена печать массива и лога действий
+        /// </summary>
+        
+        protected virtual void UserDataActionRequest(string key)
+        {
+            UserDataActionNotify?.Invoke();             
         }
     }
 }

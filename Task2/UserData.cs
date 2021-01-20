@@ -9,7 +9,14 @@ namespace Task2
     /// </summary>
     public class UserData
     {
-        public string[] Data { get; set; }
+        /// <summary>
+        /// массив данных
+        /// </summary>
+        public string[] Data { get; set; } 
+        /// <summary>
+        /// Лог действий
+        /// </summary>
+        private List<string> Log { get; set; }
         public UserData()
         {
             Data = new string[5]
@@ -20,6 +27,7 @@ namespace Task2
                     "Сидоров",
                     "Борисов"
             };
+            Log = new List<string>();
         }
         /// <summary>
         /// Метод сортирующий массив в порядке возрастания или убывания в зависимости от option
@@ -30,12 +38,15 @@ namespace Task2
             if (option == 1)
             {
                 Array.Sort(Data);
+                LogIt("Массив отсортирован по возрастанию");
             }
             else
             {
                 Array.Sort(Data);
                 Array.Reverse(Data);
+                LogIt("Массив отсортирован по убыванию");
             }
+            
         }
         /// <summary>
         /// Метод печати массива строк
@@ -48,12 +59,28 @@ namespace Task2
                 Console.WriteLine(item);
             }
             Console.WriteLine("\n_________________________\n");
+            LogIt("Массив выведен на экран пользователю");
         }
-        public void MakeSort(int option)
-        {
-            Sort(option);
-            Print();
 
+        /// <summary>
+        /// добавляет строку в лог
+        /// </summary>
+        /// <param name="message"></param>
+        private void LogIt(string message)
+        {
+            Log.Add(message);
         }
+        /// <summary>
+        /// выводит лог
+        /// </summary>
+        public void PrintLog()
+        {
+            Console.WriteLine("Лог работы программы:\n");
+            foreach (var item in Log)
+            {
+                Console.WriteLine(item);
+            }
+        }
+       
     }
 }
