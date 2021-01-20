@@ -13,23 +13,14 @@ namespace Task2
     class Program
     {
         
+
         
-        /// <summary>
-        /// Собственный класс исключения
-        /// </summary>
-        public class IncorrectActionException : Exception
-        {
-            public static string Message { get; set; }
-            public IncorrectActionException(string message, string val) : base(Message)
-            {
-                Message = message + "Полученный параметр: " + val ;
-            }
-        }        
         /// <summary>
         /// Класс данных с методами печати и сортировки массива строк
         /// </summary>
         public class UserData 
         {
+            
             public string[] Data { get; set; }
             public UserData()
             {
@@ -46,7 +37,7 @@ namespace Task2
             /// Метод сортирующий массив в порядке возрастания или убывания в зависимости от option
             /// </summary>           
             /// <param name="option"> 1- сортировка по возрастанию; 2 - сортировка по убыванию </param>            
-            public void Sort(int option)
+            private void Sort(int option)
             {
                 if (option == 1)
                 {
@@ -70,40 +61,18 @@ namespace Task2
                 }
                 Console.WriteLine("\n_________________________\n");
             }
+            public void MakeSort(int option)
+            {
+                Sort(option);
+                Print();
+
+            }
         }
 
         static void Main(string[] args)
         {
-            var userData = new UserData();
-            userData.Print();
-            bool exit = false;
-            do
-            {
-                try
-                {
-                    Console.WriteLine("Введите параметр сортировки:");
-                    Console.WriteLine("1- сортировка по возрастанию; 2 - сортировка по убыванию");
-                    var option = Convert.ToInt32(Console.ReadLine());
-                }
-                catch (System.FormatException)
-                {
-                    Console.WriteLine("Вы ввели не целое число, либо символ! Возможные варианты ввода \"1\",\"2\"");
-                }
-                catch (Exception ex)
-                {
-
-                    Console.WriteLine(ex);
-                }
-                finally
-                {
-                    Console.WriteLine("_________________________\n");
-
-                    Console.WriteLine("Для выхода нажмите ESC, для продолжения - любую клавишу");
-
-                    if (Console.ReadKey().Key == ConsoleKey.Escape) exit = true;
-                }
-
-            } while (!exit);           
+            var ui = new ConsoleUI();
+            ui.Start();            
 
 
         }
