@@ -12,27 +12,8 @@ namespace Task2
     
     class Program
     {
-        /// <summary>
-        /// Метод сортирующий массив в порядке возрастания или убывания в зависимости от option
-        /// </summary>
-        /// <param name="array">Массив строк для сортировки</param>
-        /// <param name="option"> 1- сортировка по возрастанию; 2 - сортировка по убыванию </param>
-        /// <returns>Отсортированный массив array</returns>
-        public static string[] SortArray(string[] array, int option)
-        {
-            if (option == 1)
-            {
-                Array.Sort(array);
-                return array;
-            }
-            else
-            {
-                Array.Sort(array);
-                Array.Reverse(array);
-                return array;
-            }
-            
-        }
+        
+        
         /// <summary>
         /// Собственный класс исключения
         /// </summary>
@@ -43,51 +24,86 @@ namespace Task2
             {
                 Message = message + "Полученный параметр: " + val ;
             }
-        }
-        public static void PrintArray(string[] array)
+        }        
+        /// <summary>
+        /// Класс данных с методами печати и сортировки массива строк
+        /// </summary>
+        public class UserData 
         {
-            Console.WriteLine("Массив:");
-            foreach (var item in array)
+            public string[] Data { get; set; }
+            public UserData()
             {
-                Console.WriteLine(item);
+                Data = new string[5]
+                {
+                    "Иванов",
+                    "Петров",
+                    "Алексеев",
+                    "Сидоров",
+                    "Борисов"
+                };
+            }
+            /// <summary>
+            /// Метод сортирующий массив в порядке возрастания или убывания в зависимости от option
+            /// </summary>           
+            /// <param name="option"> 1- сортировка по возрастанию; 2 - сортировка по убыванию </param>            
+            public void Sort(int option)
+            {
+                if (option == 1)
+                {
+                    Array.Sort(Data);                    
+                }
+                else
+                {
+                    Array.Sort(Data);
+                    Array.Reverse(Data);                   
+                }
+            }
+            /// <summary>
+            /// Метод печати массива строк
+            /// </summary>
+            public  void Print()
+            {
+                Console.WriteLine("Массив:");
+                foreach (var item in Data)
+                {
+                    Console.WriteLine(item);
+                }
+                Console.WriteLine("\n_________________________\n");
             }
         }
 
         static void Main(string[] args)
         {
-            
-            
-            string[] data = new string[5]
-            {
-                "Иванов",
-                "Петров",
-                "Алексеев",
-                "Сидоров",
-                "Борисов"
-            };
-
+            var userData = new UserData();
+            userData.Print();
             bool exit = false;
             do
             {
                 try
                 {
-                    Console.WriteLine();
+                    Console.WriteLine("Введите параметр сортировки:");
+                    Console.WriteLine("1- сортировка по возрастанию; 2 - сортировка по убыванию");
+                    var option = Convert.ToInt32(Console.ReadLine());
                 }
-                catch (Exception)
+                catch (System.FormatException)
+                {
+                    Console.WriteLine("Вы ввели не целое число, либо символ! Возможные варианты ввода \"1\",\"2\"");
+                }
+                catch (Exception ex)
                 {
 
-                    throw;
+                    Console.WriteLine(ex);
                 }
-                Console.WriteLine("_________________________\n");
-                
-                Console.WriteLine("Для выхода нажмите ESC, для продолжения - любую клавишу");
+                finally
+                {
+                    Console.WriteLine("_________________________\n");
 
-                if (Console.ReadKey().Key == ConsoleKey.Escape) exit = true;
+                    Console.WriteLine("Для выхода нажмите ESC, для продолжения - любую клавишу");
 
-            } while (!exit);
+                    if (Console.ReadKey().Key == ConsoleKey.Escape) exit = true;
+                }
 
-
-            Console.ReadKey();
+            } while (!exit);           
 
 
         }
