@@ -12,23 +12,22 @@ namespace Task2
         /// <summary>
         /// массив данных
         /// </summary>
-        public string[] Data { get; set; } 
+        public string[] Data 
+        {
+            get
+            {
+                return new string[]  {"Иванов", "Петров", "Алексеев", "Сидоров", "Борисов"};
+            }
+        }  
         /// <summary>
         /// Лог действий
         /// </summary>
         private List<string> Log { get; set; }
         public UserData()
-        {
-            Data = new string[5]
-            {
-                    "Иванов",
-                    "Петров",
-                    "Алексеев",
-                    "Сидоров",
-                    "Борисов"
-            };
+        {            
             Log = new List<string>();
         }
+
         /// <summary>
         /// Метод сортирующий массив в порядке возрастания или убывания в зависимости от option
         /// </summary>           
